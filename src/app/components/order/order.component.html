@@ -1,0 +1,576 @@
+<app-header></app-header>
+
+<div class="order-page-wrapper bg-light py-4">
+    <div class="container">
+        <form [formGroup]="orderForm">
+            <div class="row g-4">
+                <!-- Left Column - Cart Items -->
+                <div class="col-lg-7">
+                    <div class="cart-card">
+                        <h4 class="cart-title mb-4">Giỏ hàng</h4>
+                        
+                        <!-- Cart Items List -->
+                        <div class="cart-items">
+                            <ng-container *ngFor="let item of cartItems; let i = index">
+                                <div class="cart-item">
+                                    <!-- Remove button -->
+                                    <button type="button" 
+                                            class="btn-remove" 
+                                            (click)="confirmDelete(i)"
+                                            aria-label="Xóa sản phẩm">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+
+                                    <div class="d-flex gap-3 align-items-start">
+                                        <!-- Product Image -->
+                                        <div class="product-img-wrapper">
+                                            <img [src]="item.product.thumbnail" 
+                                                 [alt]="item.product.name" 
+                                                 class="product-img">
+                                        </div>
+
+                                        <!-- Product Info -->
+                                        <div class="flex-grow-1">
+                                            <h6 class="product-name mb-2">{{ item.product.name }}</h6>
+                                            
+                                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                                <!-- Price -->
+                                                <div class="price-display">
+                                                    <span class="current-price">
+                                                        {{ item.product.price | currency:'VND':'symbol':'1.0-0':'vi' }}
+                                                    </span>
+                                                    @if(item.product.price && item.product.price > item.product.price) {
+                                                        <span class="original-price ms-2">
+                                                            {{ item.product.price | currency:'VND':'symbol':'1.0-0':'vi' }}
+                                                        </span>
+                                                        <span class="discount-percent ms-2">
+                                                            -{{ ((item.product.price - item.product.price) / item.product.price * 100) | number:'1.0-0' }}%
+                                                        </span>
+                                                    }
+                                                </div>
+
+                                                <!-- Quantity Controls -->
+                                                <div class="quantity-controls">
+                                                    <button type="button" 
+                                                            class="btn-qty" 
+                                                            (click)="decreaseQuantity(i)"
+                                                            [disabled]="item.quantity <= 1">
+                                                        -
+                                                    </button>
+                                                    <span class="qty-display">{{ item.quantity }}</span>
+                                                    <button type="button" 
+                                                            class="btn-qty" 
+                                                            (click)="increaseQuantity(i)">
+                                                        +
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            @if(cartItems.length === 0) {
+                                <div class="empty-cart text-center py-5">
+                                    <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                                    <p class="text-muted">Giỏ hàng của bạn đang trống</p>
+                                    <a routerLink="/" class="btn btn-primary mt-3">
+                                        <i class="fas fa-arrow-left me-2"></i>Tiếp tục mua sắm
+                                    </a>
+                                </div>
+                            }
+                        </div>
+
+                        <!-- Gift Icon (if applicable) -->
+                        @if(cartItems.length > 0) {
+                            <div class="gift-section mt-3">
+                                <i class="fas fa-gift text-danger me-2"></i>
+                                <span class="text-muted small">Quà tặng kèm theo đơn hàng</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Right Column - Order Summary -->
+                <div class="col-lg-5">
+                    <div class="summary-card sticky-top" style="top: 20px;">
+                        <!-- Total Amount -->
+                        <div class="total-section mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Tổng tiền</h5>
+                                <h3 class="total-amount mb-0">
+                                    {{ totalAmount | currency:'VND':'symbol':'1.0-0':'vi' }}
+                                </h3>
+                            </div>
+                        </div>
+
+                        <!-- Invoice Checkbox -->
+                        
+                            
+
+                        <!-- Customer Info Form -->
+                        <div class="customer-form-section">
+                            <h6 class="section-title mb-3">Ghi chú đơn hàng</h6>
+                            <textarea class="form-control mb-3" 
+                                      rows="3" 
+                                      formControlName="note"
+                                      placeholder="Nhập ghi chú của bạn..."></textarea>
+
+                            <!-- Shipping & Payment Methods -->
+                            <div class="mb-3">
+                                <label for="fullname" class="form-label">Họ và tên <span class="text-danger">*</span></label>
+                                <input type="text" 
+                                    formControlName="fullname" 
+                                    class="form-control" 
+                                    id="fullname"
+                                    placeholder="Nhập họ và tên"
+                                    [class.is-invalid]="orderForm.get('fullname')!.invalid && orderForm.get('fullname')!.touched">
+                                @if(orderForm.get('fullname')!.invalid && orderForm.get('fullname')!.touched) {
+                                    <div class="invalid-feedback">
+                                        Họ và tên là trường bắt buộc.
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                <input type="email" 
+                                    formControlName="email" 
+                                    class="form-control" 
+                                    id="email"
+                                    placeholder="example@email.com"
+                                    [class.is-invalid]="orderForm.get('email')!.invalid && orderForm.get('email')!.touched">
+                                @if(orderForm.get('email')!.invalid && orderForm.get('email')!.touched) {
+                                    <div class="invalid-feedback">
+                                        {{ orderForm.get('email')!.hasError('email') ? 'Email không hợp lệ' : 'Email là trường bắt buộc' }}
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Số điện thoại <span class="text-danger">*</span></label>
+                                <input type="tel" 
+                                    formControlName="phone_number" 
+                                    class="form-control" 
+                                    id="phone"
+                                    placeholder="0xxx xxx xxx"
+                                    [class.is-invalid]="orderForm.get('phone_number')!.invalid && orderForm.get('phone_number')!.touched">
+                                @if(orderForm.get('phone_number')!.invalid && orderForm.get('phone_number')!.touched) {
+                                    <div class="invalid-feedback">
+                                        Số điện thoại là trường bắt buộc và ít nhất 6 ký tự.
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Địa chỉ <span class="text-danger">*</span></label>
+                                <input type="text" 
+                                    formControlName="address" 
+                                    class="form-control" 
+                                    id="address"
+                                    placeholder="Nhập địa chỉ chi tiết"
+                                    [class.is-invalid]="orderForm.get('address')!.invalid && orderForm.get('address')!.touched">
+                                @if(orderForm.get('address')!.invalid && orderForm.get('address')!.touched) {
+                                    <div class="invalid-feedback">
+                                        Địa chỉ là trường bắt buộc và ít nhất 5 ký tự.
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="shippingMethod" class="form-label">Phương thức vận chuyển</label>
+                                <select class="form-select" 
+                                        id="shippingMethod" 
+                                        formControlName="shipping_method">
+                                    <option value="express">Nhanh (Express)</option>
+                                    <option value="normal">Thường (Normal)</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="paymentMethod" class="form-label">Phương thức thanh toán</label>
+                                <select class="form-select" 
+                                        id="paymentMethod"
+                                        formControlName="payment_method">
+                                    <option value="cod">Thanh toán khi nhận hàng (COD)</option>
+                                    <option value="vnpay">Thanh toán bằng VNPAY</option>
+                                    <option value="zalopay">Thanh toán bằng ZaloPAY</option>
+                                </select>
+                            </div>
+
+                            <!-- Coupon Section -->
+                            <div class="coupon-section mb-3">
+                                <label class="form-label">Mã giảm giá</label>
+                                <div class="input-group">
+                                    <input type="text" 
+                                           class="form-control"
+                                           formControlName="couponCode"
+                                           placeholder="Nhập mã coupon">
+                                    <button (click)="applyCoupon()"
+                                            class="btn btn-outline-primary" 
+                                            type="button">
+                                        Áp dụng
+                                    </button>
+                                </div>
+                                @if(couponApplied) {
+                                    <div class="mt-2">
+                                        <span class="badge bg-success">
+                                            <i class="fas fa-check me-1"></i>
+                                            Đã áp dụng mã giảm giá
+                                        </span>
+                                        <button (click)="removeCoupon()"
+                                                class="btn btn-sm btn-link text-danger p-0 ms-2">
+                                            Xóa
+                                        </button>
+                                    </div>
+                                }
+                                @if(couponDiscount > 0) {
+                                    <div class="text-success mt-2 small">
+                                        <i class="fas fa-gift me-1"></i>
+                                        Bạn được giảm: {{ couponDiscount | number:'1.0-0' }} đ
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Place Order Button -->
+                        <button type="button" 
+                                class="btn btn-primary btn-lg w-100 btn-place-order"
+                                (click)="placeOrder()"
+                                [disabled]="orderForm.invalid || cartItems.length === 0">
+                            Tiến hành đặt hàng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<app-footer></app-footer>
+
+<style>
+/* General Styles */
+.order-page-wrapper {
+    min-height: calc(100vh - 200px);
+}
+
+/* Cart Card */
+.cart-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.cart-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+}
+
+/* Cart Item */
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cart-item {
+    position: relative;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    transition: all 0.3s;
+}
+
+.cart-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Remove Button */
+.btn-remove {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    background: #333;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 1;
+    font-size: 12px;
+}
+
+.btn-remove:hover {
+    background: #000;
+}
+
+/* Product Image */
+.product-img-wrapper {
+    width: 90px;
+    height: 90px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+}
+
+.product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Product Info */
+.product-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+
+/* Price */
+.price-display {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.current-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+}
+
+.original-price {
+    font-size: 13px;
+    color: #999;
+    text-decoration: line-through;
+}
+
+.discount-percent {
+    font-size: 12px;
+    color: #dc3545;
+    background: #ffe6e6;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* Quantity Controls */
+.quantity-controls {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.btn-qty {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: white;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-qty:hover:not(:disabled) {
+    background: #f0f0f0;
+}
+
+.btn-qty:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.qty-display {
+    min-width: 40px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 0 8px;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+/* Gift Section */
+.gift-section {
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Summary Card */
+.summary-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Total Section */
+.total-section {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.total-amount {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+}
+
+/* Invoice Section */
+.invoice-section {
+    padding: 15px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.custom-checkbox .form-check-input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.custom-checkbox .form-check-label {
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 6px;
+    font-size: 14px;
+}
+
+.invoice-form {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
+}
+
+.invoice-form .form-label {
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.invoice-form .form-control-sm {
+    font-size: 13px;
+}
+
+/* Customer Form Section */
+.customer-form-section {
+    padding: 15px 0;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+}
+
+.form-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.form-control,
+.form-select {
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px 12px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #1e4db7;
+    box-shadow: 0 0 0 0.2rem rgba(30, 77, 183, 0.15);
+}
+
+/* Coupon Section */
+.coupon-section {
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Place Order Button */
+.btn-place-order {
+    background: #2f5fdd;
+    border: none;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    transition: all 0.3s;
+    border-radius: 6px;
+}
+
+.btn-place-order:hover:not(:disabled) {
+    background: #1e4db7;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(30, 77, 183, 0.3);
+}
+
+.btn-place-order:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Empty Cart */
+.empty-cart {
+    padding: 60px 20px;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .cart-card,
+    .summary-card {
+        padding: 20px;
+    }
+
+    .product-img-wrapper {
+        width: 75px;
+        height: 75px;
+    }
+
+    .product-name {
+        font-size: 13px;
+    }
+
+    .total-amount {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .cart-item {
+        padding: 12px;
+    }
+
+    .product-img-wrapper {
+        width: 65px;
+        height: 65px;
+    }
+
+    .price-display {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .current-price {
+        font-size: 15px;
+    }
+}
+</style>

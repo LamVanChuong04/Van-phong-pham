@@ -1,0 +1,259 @@
+/* Footer Main */
+.footer {
+    background: linear-gradient(135deg, #1e4db7 0%, #164494 100%);
+    color: white;
+}
+
+.footer-main {
+    padding: 50px 0 30px;
+}
+
+.footer-section {
+    padding-right: 15px;
+}
+
+/* Footer Logo */
+.footer-logo img {
+    max-width: 200px;
+    height: auto;
+}
+
+/* Footer Headings */
+.footer-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #FFD700;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.footer-heading {
+    font-size: 16px;
+    font-weight: 700;
+    color: #FFD700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+/* Footer Text */
+.footer-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 10px;
+}
+
+/* Email Subscribe */
+.email-subscribe .input-group {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.email-subscribe .form-control {
+    border: none;
+    padding: 10px 15px;
+    font-size: 13px;
+}
+
+.email-subscribe .form-control:focus {
+    box-shadow: none;
+}
+
+.email-subscribe .btn-warning {
+    background: #FFD700;
+    border: none;
+    color: #333;
+    font-weight: 700;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+.email-subscribe .btn-warning:hover {
+    background: #FFC700;
+}
+
+/* Partner Logo */
+.partner-logo {
+    display: flex;
+    align-items: center;
+}
+
+.partner-text {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Address Block */
+.address-block {
+    margin-bottom: 20px;
+}
+
+.address-label {
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.address-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 0;
+}
+
+/* Certification Badge */
+.certification-badge img {
+    max-width: 150px;
+    height: auto;
+}
+
+/* Contact Info */
+.contact-info {
+    margin-bottom: 20px;
+}
+
+.contact-item {
+    font-size: 14px;
+    line-height: 1.8;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.contact-item strong {
+    font-weight: 700;
+}
+
+.contact-item a {
+    color: #FFD700;
+    text-decoration: none;
+}
+
+.contact-item a:hover {
+    text-decoration: underline;
+}
+
+/* Footer Links */
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+.footer-links a:hover {
+    color: #FFD700;
+    padding-left: 5px;
+}
+
+/* Social Media */
+.social-media {
+    display: flex;
+    gap: 10px;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    color: #1e4db7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s;
+    font-size: 18px;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+.social-icon.messenger {
+    background: linear-gradient(135deg, #00B2FF 0%, #006AFF 100%);
+    color: white;
+}
+
+.social-icon.zalo {
+    background: white;
+    color: #0068FF;
+}
+
+.zalo-text {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.copyright-text {
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .footer-main {
+        padding: 40px 0 20px;
+    }
+
+    .footer-section {
+        margin-bottom: 30px;
+    }
+
+    .footer-heading {
+        font-size: 15px;
+    }
+
+    .footer-text,
+    .footer-links a {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 576px) {
+    .footer-main {
+        padding: 30px 0 15px;
+    }
+
+    .footer-logo img {
+        max-width: 150px;
+    }
+
+    .email-subscribe .form-control,
+    .email-subscribe .btn-warning {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+
+    .social-media {
+        flex-wrap: wrap;
+    }
+
+    .social-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+}

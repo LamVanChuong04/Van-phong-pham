@@ -1,0 +1,179 @@
+<header>
+    <!-- Main navigation -->
+    <nav class="navbar navbar-light bg-primary py-3">
+        <div class="container-fluid px-4">
+            <div class="d-flex align-items-center w-100 gap-4">
+                <!-- Logo -->
+                <a class="navbar-brand flex-shrink-0" href="#">
+                    <img src="https://via.placeholder.com/150x50/1e4db7/ffffff?text=THIEN+LONG" 
+                         alt="Thiên Long" 
+                         height="50"
+                         class="logo-img">
+                </a>
+
+                <!-- Search bar - Centered and larger -->
+                <div class="search-bar-wrapper flex-grow-1 d-none d-lg-block">
+                    <div class="input-group search-group">
+                        <input type="text" 
+                               class="form-control search-input" 
+                               placeholder="Tìm kiếm sản phẩm..." 
+                               aria-label="Tìm kiếm">
+                        <button class="btn btn-dark search-btn" type="button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right side menu -->
+                <div class="navbar-right d-flex align-items-center gap-4 flex-shrink-0">
+                    <!-- Phone -->
+                    <a href="tel:1900866819" class="phone-link text-white text-decoration-none d-none d-lg-flex align-items-center">
+                        <i class="fas fa-phone-alt fs-5 me-2"></i>
+                        <div class="phone-info">
+                            <div class="phone-number fw-bold">1900 866 819</div>
+                            <div class="phone-label" style="font-size: 12px;">Hỗ trợ khách hàng</div>
+                        </div>
+                    </a>
+
+                    <!-- User Dropdown -->
+                    @if(userResponse) {
+                        <div class="user-menu-container">
+                            <div class="dropdown">
+                                <a class="user-menu-toggle d-flex align-items-center text-decoration-none text-white" 
+                                   href="javascript:void(0)" 
+                                   id="userDropdown" 
+                                   data-bs-toggle="dropdown" 
+                                   aria-expanded="false">
+                                    <i class="far fa-user-circle fs-4 me-2"></i>
+                                    <div class="user-info d-none d-lg-block">
+                                        <div class="user-greeting" style="font-size: 14px;">Hi, {{ userResponse.fullname }}...</div>
+                                        <div class="user-action" style="font-size: 12px;">Đăng xuất</div>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end user-dropdown" aria-labelledby="userDropdown">
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0)" (click)="handleItemClick(0); $event.stopPropagation()">
+                                            <i class="fas fa-user me-2"></i>Tài khoản của tôi
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0)" (click)="handleItemClick(1); $event.stopPropagation()">
+                                            <i class="fas fa-shopping-bag me-2"></i>Đơn mua
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider my-2"></li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="handleItemClick(2); $event.stopPropagation()">
+                                            <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    } @else {
+                        <a class="btn btn-light text-primary px-4 fw-bold" routerLink="/login">
+                            <i class="fas fa-sign-in-alt me-2"></i>Đăng nhập
+                        </a>
+                    }
+
+                    <!-- Cart Icon -->
+                    <a class="cart-link position-relative text-white" routerLink="/orders">
+                        <i class="fas fa-shopping-bag fs-3"></i>
+                        <span class="badge bg-danger cart-badge">0</span>
+                    </a>
+
+                    <!-- Mobile toggle -->
+                    <button class="navbar-toggler border-0 text-white d-lg-none" 
+                            type="button" 
+                            data-bs-toggle="collapse" 
+                            data-bs-target="#navbarNav" 
+                            aria-controls="navbarNav" 
+                            aria-expanded="false" 
+                            aria-label="Toggle navigation">
+                        <i class="fas fa-bars fs-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Search & Nav -->
+            <div class="collapse navbar-collapse mt-3" id="navbarNav">
+                <div class="mobile-search w-100 mb-3 d-lg-none">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+                        <button class="btn btn-dark" type="button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Category menu bar -->
+    <div class="category-bar bg-light py-3">
+        <div class="container-fluid px-4">
+            <div class="category-scroll">
+                <ul class="category-list d-flex list-unstyled mb-0 justify-content-center align-items-center">
+                    <li class="category-item">
+                        <a href="#" class="category-link">
+                            <i class="fas fa-pen icon-color-blue"></i>
+                            <span>Bút viết</span>
+                            <i class="fas fa-chevron-down ms-1"></i>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link">
+                            <i class="fas fa-folder icon-color-green"></i>
+                            <span>Văn phòng phẩm</span>
+                            <i class="fas fa-chevron-down ms-1"></i>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link">
+                            <i class="fas fa-graduation-cap icon-color-teal"></i>
+                            <span>Dụng Cụ Học Tập</span>
+                            <i class="fas fa-chevron-down ms-1"></i>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link">
+                            <i class="fas fa-palette icon-color-orange"></i>
+                            <span>Mỹ Thuật</span>
+                            <i class="fas fa-chevron-down ms-1"></i>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link">
+                            <i class="fas fa-print icon-color-purple"></i>
+                            <span>Giấy In</span>
+                            <i class="fas fa-chevron-down ms-1"></i>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link">
+                            <i class="fas fa-gift icon-color-red"></i>
+                            <span>Bút cao cấp</span>
+                            <i class="fas fa-chevron-down ms-1"></i>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link">
+                            <i class="fas fa-book icon-color-cyan"></i>
+                            <span>Sách</span>
+                            <i class="fas fa-chevron-down ms-1"></i>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link">
+                            <i class="fas fa-dumbbell icon-color-pink"></i>
+                            <span>Sports - Lifestyle</span>
+                            <i class="fas fa-chevron-down ms-1"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+
