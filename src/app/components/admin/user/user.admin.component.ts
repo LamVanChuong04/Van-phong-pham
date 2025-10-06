@@ -21,7 +21,7 @@ export class UserAdminComponent extends BaseComponent implements OnInit{
   
   users: UserResponse[] = [];        
   currentPage: number = 0;
-  itemsPerPage: number = 12;
+  itemsPerPage: number = 5;
   pages: number[] = [];
   totalPages:number = 0;
   visiblePages: number[] = [];

@@ -145,7 +145,7 @@ export class LoginComponent extends BaseComponent implements OnInit{
               this.userService.saveUserResponseToLocalStorage(this.userResponse);
             }
   
-            if (this.userResponse?.role.name === 'admin') {
+            if (this.userResponse?.role.name?.toLowerCase() === 'admin') {
               this.router.navigate(['/admin']);
             } else {
               this.router.navigate(['/']);

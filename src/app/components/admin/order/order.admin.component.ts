@@ -18,7 +18,7 @@ import { BaseComponent } from '../../base/base.component';
 export class OrderAdminComponent extends BaseComponent implements OnInit{  
   orders: OrderResponse[] = [];
   currentPage: number = 0;
-  itemsPerPage: number = 12;
+  itemsPerPage: number = 5;
   pages: number[] = [];
   totalPages:number = 0;
   keyword:string = "";
@@ -37,7 +37,7 @@ export class OrderAdminComponent extends BaseComponent implements OnInit{
   }
   searchOrders() {
     this.currentPage = 0;
-    this.itemsPerPage = 12;
+    this.itemsPerPage = 5;
     //Mediocre Iron Wallet
     debugger
     this.getAllOrders(this.keyword.trim(), this.currentPage, this.itemsPerPage);
@@ -47,7 +47,8 @@ export class OrderAdminComponent extends BaseComponent implements OnInit{
     this.orderService.getAllOrders(keyword, page, limit).subscribe({
       next: (apiResponse: ApiResponse) => {
         debugger        
-        this.orders = apiResponse.data.orders;
+        this.orders = apiResponse.data.orders; // Sắp xếp giảm dần đơn nào mới nhất lên đầu
+
         this.totalPages = apiResponse.data.totalPages;
         this.visiblePages = this.generateVisiblePageArray(this.currentPage, this.totalPages);
       },

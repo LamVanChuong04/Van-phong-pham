@@ -53,6 +53,8 @@ export class HeaderComponent extends BaseComponent implements OnInit {
       this.tokenService.removeToken();
       this.userResponse = null;
       this.router.navigate(['/login']);
+    }else{
+      this.router.navigate(['/orders']);
     }
     this.isPopoverOpen = false; // Close the popover after clicking an item    
   }

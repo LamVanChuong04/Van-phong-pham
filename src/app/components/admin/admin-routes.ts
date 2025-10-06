@@ -12,11 +12,13 @@ import { InsertCategoryAdminComponent } from "./category/insert/insert.category.
 import { UpdateCategoryAdminComponent } from "./category/update/update.category.admin.component";
 import { UserAdminComponent } from "./user/user.admin.component";
 
+
 export const adminRoutes: Routes = [
     {
         path: 'admin',
         component: AdminComponent,
         children: [
+            
             {
                 path: 'orders',
                 component: OrderAdminComponent

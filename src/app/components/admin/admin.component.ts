@@ -25,7 +25,7 @@ export class AdminComponent extends BaseComponent implements OnInit {
     // Default router
     debugger
     if (this.router.url === '/admin') {
-      this.router.navigate(['/admin/orders']);
+      this.router.navigate(['/admin/dashboard']);
     }
    }  
   logout() {
@@ -36,7 +36,9 @@ export class AdminComponent extends BaseComponent implements OnInit {
   }
   showAdminComponent(componentName: string): void {
     debugger
-    if (componentName === 'orders') {
+    if (componentName === 'dashboard') {
+      this.router.navigate(['/admin/dashboard']);
+    } else if (componentName === 'orders') {
       this.router.navigate(['/admin/orders']);
     } else if (componentName === 'categories') {
       this.router.navigate(['/admin/categories']);

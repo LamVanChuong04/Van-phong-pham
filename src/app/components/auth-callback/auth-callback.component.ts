@@ -65,9 +65,12 @@ export class AuthCallbackComponent extends BaseComponent implements OnInit {
             this.userService.saveUserResponseToLocalStorage(this.userResponse);
 
             // Điều hướng người dùng dựa trên vai trò
-            if (this.userResponse?.role.name === 'admin') {
+            const roleName = this.userResponse?.role.name?.toLowerCase();
+            if (roleName === 'admin') {
               this.router.navigate(['/admin']);
-            } else if (this.userResponse?.role.name === 'user') {
+            } else if (roleName === 'user') {
+              this.router.navigate(['/']);
+            } else {
               this.router.navigate(['/']);
             }
           },
