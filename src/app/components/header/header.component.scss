@@ -5,6 +5,8 @@
 
 .navbar {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2000; /* ensure header overlays page content like orders */
 }
 
 .logo-img {
@@ -84,12 +86,14 @@
     border-radius: 8px;
     padding: 8px 0;
     margin-top: 12px;
+    z-index: 2100; /* raise above content on pages */
 }
 
 .user-dropdown .dropdown-item {
     padding: 12px 20px;
     font-size: 14px;
     transition: all 0.3s;
+    
 }
 
 .user-dropdown .dropdown-item:hover {
@@ -217,4 +221,18 @@
     .cart-link i {
         font-size: 24px;
     }
+}
+
+.user-menu-toggle {
+  cursor: pointer;
+  padding: 0;
+}
+
+.user-menu-toggle:hover {
+  opacity: 0.9;
+}
+
+.dropdown-menu {
+  min-width: 200px;
+  z-index: 2100;
 }

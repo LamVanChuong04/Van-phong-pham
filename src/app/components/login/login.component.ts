@@ -147,7 +147,7 @@ export class LoginComponent extends BaseComponent implements OnInit{
   
             if (this.userResponse?.role.name === 'admin') {
               this.router.navigate(['/admin']);
-            } else if (this.userResponse?.role.name === 'user') {
+            } else {
               this.router.navigate(['/']);
             }
           }),

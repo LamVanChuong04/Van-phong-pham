@@ -35,51 +35,45 @@
                         </div>
                     </a>
 
-                    <!-- User Dropdown -->
-                    @if(userResponse) {
-                        <div class="user-menu-container">
-                            <div class="dropdown">
-                                <a class="user-menu-toggle d-flex align-items-center text-decoration-none text-white" 
-                                   href="javascript:void(0)" 
-                                   id="userDropdown" 
-                                   data-bs-toggle="dropdown" 
-                                   aria-expanded="false">
-                                    <i class="far fa-user-circle fs-4 me-2"></i>
-                                    <div class="user-info d-none d-lg-block">
-                                        <div class="user-greeting" style="font-size: 14px;">Hi, {{ userResponse.fullname }}...</div>
-                                        <div class="user-action" style="font-size: 12px;">Đăng xuất</div>
-                                    </div>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end user-dropdown" aria-labelledby="userDropdown">
-                                    <li>
-                                        <a class="dropdown-item" href="javascript:void(0)" (click)="handleItemClick(0); $event.stopPropagation()">
-                                            <i class="fas fa-user me-2"></i>Tài khoản của tôi
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="javascript:void(0)" (click)="handleItemClick(1); $event.stopPropagation()">
-                                            <i class="fas fa-shopping-bag me-2"></i>Đơn mua
-                                        </a>
-                                    </li>
-                                    <li><hr class="dropdown-divider my-2"></li>
-                                    <li>
-                                        <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="handleItemClick(2); $event.stopPropagation()">
-                                            <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    } @else {
-                        <a class="btn btn-light text-primary px-4 fw-bold" routerLink="/login">
-                            <i class="fas fa-sign-in-alt me-2"></i>Đăng nhập
-                        </a>
-                    }
+                <!-- User Dropdown -->
+@if(userResponse) {
+    <div class="user-menu-container dropdown" ngbDropdown autoClose="outside" [open]="isPopoverOpen">
+        <button ngbDropdownToggle class="btn user-menu-toggle d-flex align-items-center text-decoration-none text-white border-0 bg-transparent" (click)="togglePopover($event)">
+            <i class="far fa-user-circle fs-4 me-2"></i>
+            <div class="user-info d-none d-lg-block">
+                <div class="user-greeting" style="font-size: 14px;">Hi, {{ userResponse.fullname }}...</div>
+                <div class="user-action" style="font-size: 12px;">Tài khoản</div>
+            </div>
+        </button>
+        <ul ngbDropdownMenu class="dropdown-menu dropdown-menu-end user-dropdown show" *ngIf="isPopoverOpen">
+            <li>
+                <a class="dropdown-item" href="javascript:void(0)" (click)="handleItemClick(0)">
+                    <i class="fas fa-user me-2"></i>Tài khoản của tôi
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="javascript:void(0)" (click)="handleItemClick(1)">
+                    <i class="fas fa-shopping-bag me-2"></i>Đơn mua
+                </a>
+            </li>
+            <li><hr class="dropdown-divider my-2"></li>
+            <li>
+                <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="handleItemClick(2)">
+                    <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
+                </a>
+            </li>
+        </ul>
+    </div>
+} @else {
+    <a class="btn btn-light text-primary px-4 fw-bold" routerLink="/login">
+        <i class="fas fa-sign-in-alt me-2"></i>Đăng nhập
+    </a>
+}
 
                     <!-- Cart Icon -->
                     <a class="cart-link position-relative text-white" routerLink="/orders">
                         <i class="fas fa-shopping-bag fs-3"></i>
-                        <span class="badge bg-danger cart-badge">0</span>
+                        <span class="badge bg-danger cart-badge">{{ cartCount }}</span>
                     </a>
 
                     <!-- Mobile toggle -->

@@ -94,27 +94,16 @@
                 <!-- Right Column - Order Summary -->
                 <div class="col-lg-5">
                     <div class="summary-card sticky-top" style="top: 20px;">
-                        <!-- Total Amount -->
-                        <div class="total-section mb-3">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Tổng tiền</h5>
-                                <h3 class="total-amount mb-0">
-                                    {{ totalAmount | currency:'VND':'symbol':'1.0-0':'vi' }}
-                                </h3>
-                            </div>
-                        </div>
-
-                        <!-- Invoice Checkbox -->
                         
                             
 
                         <!-- Customer Info Form -->
                         <div class="customer-form-section">
-                            <h6 class="section-title mb-3">Ghi chú đơn hàng</h6>
+                            <!-- <h6 class="section-title mb-3">Ghi chú đơn hàng</h6>
                             <textarea class="form-control mb-3" 
                                       rows="3" 
                                       formControlName="note"
-                                      placeholder="Nhập ghi chú của bạn..."></textarea>
+                                      placeholder="Nhập ghi chú của bạn..."></textarea> -->
 
                             <!-- Shipping & Payment Methods -->
                             <div class="mb-3">
@@ -230,6 +219,15 @@
                                         Bạn được giảm: {{ couponDiscount | number:'1.0-0' }} đ
                                     </div>
                                 }
+                                <!--tổng tiền thanh toán-->
+                                <div class="total-section mb-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Tổng tiền</h5>
+                                        <h3 class="total-amount mb-0">
+                                            {{ totalAmount | currency:'VND':'symbol':'1.0-0':'vi' }}
+                                        </h3>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

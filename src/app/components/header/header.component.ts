@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd } from '@angular/router';
 import { UserResponse } from '../../responses/user/user.response';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -20,9 +21,23 @@ export class HeaderComponent extends BaseComponent implements OnInit {
   userResponse?: UserResponse | null;
   isPopoverOpen = false;
   activeNavItem: number = 0;
+  cartCount: number = 0;
 
   ngOnInit() {
     this.userResponse = this.userService.getUserResponseFromLocalStorage();
+    // Refresh header user state on navigation changes (e.g., after login/logout)
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.userResponse = this.userService.getUserResponseFromLocalStorage();
+        // refresh cart key on user change
+        this.cartService.refreshCart();
+      }
+    });
+
+    // Subscribe to cart count updates
+    this.cartService.cartCount$.subscribe(count => this.cartCount = count);
+    // Initialize current count
+    this.cartService.refreshCart();
   }
 
   togglePopover(event: Event): void {
@@ -31,14 +46,13 @@ export class HeaderComponent extends BaseComponent implements OnInit {
   }
 
   handleItemClick(index: number): void {
-    //console.error(`Clicked on "${index}"`);
     if (index === 0) {
-      debugger
       this.router.navigate(['/user-profile']);
     } else if (index === 2) {
       this.userService.removeUserFromLocalStorage();
       this.tokenService.removeToken();
-      this.userResponse = this.userService.getUserResponseFromLocalStorage();
+      this.userResponse = null;
+      this.router.navigate(['/login']);
     }
     this.isPopoverOpen = false; // Close the popover after clicking an item    
   }
@@ -47,4 +61,5 @@ export class HeaderComponent extends BaseComponent implements OnInit {
     this.activeNavItem = index;
     //console.error(this.activeNavItem);
   }
+  
 }

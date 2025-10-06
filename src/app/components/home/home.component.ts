@@ -27,13 +27,15 @@ export class HomeComponent extends BaseComponent implements OnInit {
   categories: Category[] = []; // Dữ liệu động từ categoryService
   selectedCategoryId: number = 0; // Giá trị category được chọn
   currentPage: number = 0;
-  itemsPerPage: number = 12;
+  itemsPerPage: number = 10;
   pages: number[] = [];
   totalPages: number = 0;
   visiblePages: number[] = [];
   keyword: string = "";
   localStorage?: Storage | undefined;
   apiBaseUrl = environment.apiBaseUrl;
+  // Sản phẩm theo từng category
+  categoryProducts: { [categoryId: number]: Product[] } = {};
   
 
   ngOnInit() {
@@ -56,6 +58,8 @@ export class HomeComponent extends BaseComponent implements OnInit {
       next: (apiResponse: ApiResponse) => {
         debugger;
         this.categories = apiResponse.data;
+        // Sau khi có categories, tải danh sách sản phẩm cho từng nhóm
+        this.loadProductsForCategories();
       },
       complete: () => {
         debugger;
@@ -67,6 +71,22 @@ export class HomeComponent extends BaseComponent implements OnInit {
           title: 'Lỗi Tải Dữ Liệu'
         });
       }
+    });
+  }
+
+  private loadProductsForCategories() {
+    // Lấy một số sản phẩm nổi bật cho mỗi category (ví dụ 10 sp)
+    const limitPerCategory = 10;
+    this.categories.forEach(category => {
+      this.productService.getProducts('', category.id, 0, limitPerCategory).subscribe({
+        next: (apiresponse: ApiResponse) => {
+          const response = apiresponse.data;
+          response.products.forEach((product: Product) => {
+            product.url = `${environment.apiBaseUrl}/products/images/${product.thumbnail}`;
+          });
+          this.categoryProducts[category.id] = response.products;
+        }
+      });
     });
   }
 
@@ -117,5 +137,15 @@ export class HomeComponent extends BaseComponent implements OnInit {
     debugger;
     // Điều hướng đến trang detail-product với productId là tham số
     this.router.navigate(['/products', productId]);
+  }
+
+  // Nút xem nhanh
+  onQuickView(productId: number) {
+    this.router.navigate(['/products', productId]);
+  }
+
+  // Xem thêm theo category
+  viewMoreByCategory(categoryId: number) {
+    this.router.navigate(['/home'], { queryParams: { categoryId, page: 0 } });
   }
 }
