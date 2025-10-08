@@ -46,7 +46,7 @@ export class PaymentCallbackComponent extends BaseComponent implements OnInit { 
           debugger
           this.cartService.clearCart();
           this.router.navigate(['/']);
-        }, 3000);
+        }, 5000);
       },
       error: (error: HttpErrorResponse) => {
         this.loading = false;

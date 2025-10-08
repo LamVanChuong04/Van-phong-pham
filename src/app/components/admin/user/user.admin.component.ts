@@ -28,10 +28,15 @@ export class UserAdminComponent extends BaseComponent implements OnInit{
   keyword:string = "";
   localStorage?:Storage;
   
-  constructor(){
-    super()
+  constructor() {
+  super();
+  if (typeof document !== 'undefined') {
     this.localStorage = document.defaultView?.localStorage;
+  } else {
+    this.localStorage = undefined; // or handle SSR fallback
   }
+}
+
   ngOnInit(): void {
     this.currentPage = Number(this.localStorage?.getItem('currentUserAdminPage')) || 0;
     this.getUsers(this.keyword, this.currentPage, this.itemsPerPage);
