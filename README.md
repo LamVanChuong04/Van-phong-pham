@@ -1,112 +1,90 @@
-# 🛍️ My Văn Phòng Phẩm - Frontend (Angular)
 
-## 🧭 Giới thiệu
+# 🛍️ Website Bán Văn Phòng Phẩm - Frontend (Angular)
 
-Đây là **frontend** của dự án **My Văn Phòng Phẩm**, được xây dựng bằng **Angular 17** và **Bootstrap 5**.  
-Ứng dụng cho phép người dùng xem sản phẩm, lọc theo danh mục, thêm vào giỏ hàng, và thao tác với API backend (Spring Boot).
+[![Angular](https://img.shields.io/badge/Angular-18+-DD0031?style=for-the-badge&logo=angular&logoColor=white)](https://angular.io/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5+-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3+-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
 
----
-
-## ⚙️ Công nghệ sử dụng
-
-| Thành phần | Phiên bản |
-|-------------|------------|
-| Angular | 17.x |
-| TypeScript | 5.x |
-| Bootstrap | 5.x |
+> 🚀 Ứng dụng frontend hiện đại được xây dựng bằng Angular, phục vụ hệ thống bán hàng văn phòng phẩm, kết nối với backend RESTful API.
 
 ---
 
-## 🚀 Tính năng
-- Hiển thị danh sách sản phẩm  
-- Lọc sản phẩm
-- Xem chi tiết sản phẩm  
-- Thêm sản phẩm vào giỏ hàng  
-- Xóa sản phẩm khỏi giỏ hàng  
-- Hiển thị tổng tiền trong giỏ  
-- Hỗ trợ phân trang và toast thông báo
+## 📑 Mục Lục
+- [✨ Giới Thiệu](#-giới-thiệu)
+- [⚙️ Công Nghệ Sử Dụng](#️-công-nghệ-sử-dụng)
+- [📁 Cấu Trúc Thư Mục](#-cấu-trúc-thư-mục)
+- [🚀 Cài Đặt & Chạy Dự Án](#-cài-đặt--chạy-dự-án)
+- [🔐 Bảo Mật & Auth](#-bảo-mật--auth)
+- [🌐 Kết Nối API](#-kết-nối-api)
+- [🎨 Giao Diện](#-giao-diện)
+- [🧠 Best Practices](#-best-practices)
+- [🤝 Đóng Góp](#-đóng-góp)
+
 ---
 
-## 🧱 Cấu trúc thư mục
+## ✨ Giới Thiệu
+
+Dự án này là **frontend** của hệ thống **bán văn phòng phẩm**, được phát triển bằng **Angular 17**, sử dụng **RESTful API với JWT Authentication**.  
+Người dùng có thể:
+- 🛒 Xem và mua sản phẩm
+- 🔍 Lọc, tìm kiếm, sắp xếp sản phẩm
+- 👤 Đăng ký / đăng nhập / phân quyền người dùng
+- ❤️ Quản lý giỏ hàng, yêu thích, thanh toán
+- 💳 Tích hợp callback thanh toán (VNPay, MoMo)
+
+---
+
+## ⚙️ Công Nghệ Sử Dụng
+
+| Thành phần | Mô tả |
+|-------------|-------|
+| **Angular 17+** | Framework frontend chính |
+| **TypeScript 5+** | Ngôn ngữ lập trình chính |
+| **Bootstrap 5.3** | CSS framework giao diện |
+| **Angular Router** | Điều hướng trang |
+| **Interceptor + Guard** | Xác thực JWT và bảo vệ route |
+| **SweetAlert2 / Toast** | Hiển thị thông báo thân thiện |
+| **Payment Callback Module** | Xử lý phản hồi thanh toán từ API |
+
+---
+
+## 📁 Cấu Trúc Thư Mục
+
+```bash
 src/
- ├─ app/
- │   ├─ components/                # 🧩 Các component hiển thị UI
- │   │   ├─ header/
- │   │   │   ├─ header.component.ts
- │   │   │   ├─ header.component.html
- │   │   │   └─ header.component.scss
- │   │   ├─ footer/
- │   │   ├─ home/
- │   │   ├─ category-page/
- │   │   ├─ product-detail/
- │   │   ├─ cart/
- │   │   └─ shared/                # Các component tái sử dụng
- │
- │   ├─ dtos/                      # 📦 Data Transfer Objects
- │   │   ├─ product.dto.ts
- │   │   ├─ category.dto.ts
- │   │   └─ user.dto.ts
- │
- │   ├─ exceptions/                # ⚠️ Xử lý lỗi ứng dụng
- │   │   ├─ http-error-handler.ts
- │   │   └─ app-error.model.ts
- │
- │   ├─ guards/                    # 🔒 Route Guards
- │   │   ├─ auth.guard.ts
- │   │   └─ admin.guard.ts
- │
- │   ├─ interceptors/              # ⚙️ HTTP Interceptors
- │   │   ├─ auth.interceptor.ts
- │   │   ├─ error.interceptor.ts
- │   │   └─ loading.interceptor.ts
- │
- │   ├─ models/                    # 📘 Interface & Model (domain objects)
- │   │   ├─ product.model.ts
- │   │   ├─ category.model.ts
- │   │   ├─ user.model.ts
- │   │   └─ cart-item.model.ts
- │
- │   ├─ payment-callback/          # 💳 Xử lý callback từ cổng thanh toán 
- │   │   ├─ payment-callback.component.ts
- │   │   └─ payment-callback.service.ts
- │
- │   ├─ responses/                 # 📤 Định nghĩa cấu trúc phản hồi từ backend
- │   │   ├─ api-response.model.ts
- │   │   ├─ paginated-response.model.ts
- │   │   └─ error-response.model.ts
- │
- │   ├─ services/                  # 🔧 Service kết nối API
- │   │   ├─ product.service.ts
- │   │   ├─ category.service.ts
- │   │   ├─ auth.service.ts
- │   │   ├─ cart.service.ts
- │   │   └─ toast.service.ts
- │
- │   ├─ styles/                    # 🎨 SCSS toàn cục hoặc mixin
- │   │   ├─ _variables.scss
- │   │   ├─ _mixins.scss
- │   │   └─ theme.scss
- │
- │   ├─ app.config.ts              # Cấu hình ứng dụng (Angular standalone)
- │   ├─ app.config.server.ts       # Config riêng khi chạy SSR
- │   ├─ app.routes.ts              # Định nghĩa route chính
- │   └─ app.component.ts
- │
- ├─ assets/                        # 🖼️ Hình ảnh, icon, fonts, JSON
- │   ├─ images/
- │   ├─ icons/
- │   └─ mock-data/
- │
- ├─ environments/                  # 🌍 Môi trường build
- │   ├─ environment.ts
- │   └─ environment.prod.ts
- │
- ├─ index.html                     # HTML gốc
- ├─ main.ts                        # Entry chính của Angular
- ├─ main.server.ts                 # Entry khi chạy Angular Universal
- ├─ polyfills.ts                   # Polyfills cho trình duyệt cũ
- ├─ styles.scss                    # SCSS toàn cục
- └─ tsconfig.app.json
+└── app/
+    ├── components/              # Các component hiển thị (UI)
+    │   ├── cart/                # Giỏ hàng
+    │   ├── product/             # Danh sách và chi tiết sản phẩm
+    │   ├── auth/                # Đăng nhập, đăng ký
+    │   └── shared/              # Navbar, Footer, Toast, Modal
+    │
+    ├── dtos/                    # Data Transfer Objects (model giao tiếp API)
+    │   ├── product.dto.ts
+    │   ├── user.dto.ts
+    │   └── order.dto.ts
+    │
+    ├── exceptions/              # Xử lý lỗi chung (custom error handler)
+    ├── guards/                  # Route guards (AuthGuard, AdminGuard)
+    ├── interceptors/            # HTTP Interceptors (JWT, Error)
+    ├── models/                  # Định nghĩa interface/model dữ liệu
+    ├── payment-callback/        # Module xử lý callback từ cổng thanh toán
+    ├── responses/               # Các response model từ API
+    ├── services/                # Giao tiếp API (UserService, ProductService, AuthService)
+    ├── styles/                  # CSS & SCSS toàn cục
+    │
+    ├── app.config.ts            # Cấu hình app chung
+    ├── app.config.server.ts     # Cấu hình chạy server-side rendering
+    ├── app.routes.ts            # Định nghĩa router
+    │
+    ├── assets/                  # Ảnh, icon, font, JSON tĩnh
+    ├── environments/            # environment.ts / environment.prod.ts
+    ├── index.html               # Trang gốc Angular
+    ├── main.ts                  # Entry point chính
+    ├── main.server.ts           # SSR entry point
+    ├── polyfills.ts             # Polyfills cho trình duyệt cũ
+    └── styles.scss              # Style toàn cục
+---
 ### Cài NodeJS & Angular CLI
 ```bash
 install nodejs
