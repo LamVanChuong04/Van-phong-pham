@@ -154,12 +154,19 @@ export class OrderComponent extends BaseComponent implements OnInit {
   }
 
   confirmDelete(index: number): void {
-    if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
-      this.cartItems.splice(index, 1);
-      this.updateCartFromCartItems();
-      this.calculateTotal();
-    }
+  if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+    this.cartItems.splice(index, 1);
+    this.updateCartFromCartItems();
+    this.calculateTotal();
+    
+    this.toastService.showToast({
+      error: null,
+      defaultMsg: 'Sản phẩm đã được xóa khỏi giỏ hàng.',
+      title: 'Thành công'
+    });
   }
+}
+
 
   private updateCartFromCartItems(): void {
     this.cart.clear();

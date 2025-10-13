@@ -4,7 +4,7 @@
         <div class="container-fluid px-4">
             <div class="d-flex align-items-center w-100 gap-4">
                 <!-- Logo -->
-                <a class="navbar-brand flex-shrink-0" href="#">
+                <a class="navbar-brand flex-shrink-0" href="/home">
                     <img src="https://theme.hstatic.net/1000230347/1001380508/14/logo.png?v=881" 
                          alt="Thiên Long" 
                          height="50"
@@ -108,62 +108,15 @@
         <div class="container-fluid px-4">
             <div class="category-scroll">
                 <ul class="category-list d-flex list-unstyled mb-0 justify-content-center align-items-center">
-                    <li class="category-item">
-                        <a href="#" class="category-link">
-                            <i class="fas fa-pen icon-color-blue"></i>
-                            <span>Bút viết</span>
-                            <i class="fas fa-chevron-down ms-1"></i>
-                        </a>
-                    </li>
-                    <li class="category-item">
-                        <a href="#" class="category-link">
-                            <i class="fas fa-folder icon-color-green"></i>
-                            <span>Văn phòng phẩm</span>
-                            <i class="fas fa-chevron-down ms-1"></i>
-                        </a>
-                    </li>
-                    <li class="category-item">
-                        <a href="#" class="category-link">
-                            <i class="fas fa-graduation-cap icon-color-teal"></i>
-                            <span>Dụng Cụ Học Tập</span>
-                            <i class="fas fa-chevron-down ms-1"></i>
-                        </a>
-                    </li>
-                    <li class="category-item">
-                        <a href="#" class="category-link">
-                            <i class="fas fa-palette icon-color-orange"></i>
-                            <span>Mỹ Thuật</span>
-                            <i class="fas fa-chevron-down ms-1"></i>
-                        </a>
-                    </li>
-                    <li class="category-item">
-                        <a href="#" class="category-link">
-                            <i class="fas fa-print icon-color-purple"></i>
-                            <span>Giấy In</span>
-                            <i class="fas fa-chevron-down ms-1"></i>
-                        </a>
-                    </li>
-                    <li class="category-item">
-                        <a href="#" class="category-link">
-                            <i class="fas fa-gift icon-color-red"></i>
-                            <span>Bút cao cấp</span>
-                            <i class="fas fa-chevron-down ms-1"></i>
-                        </a>
-                    </li>
-                    <li class="category-item">
-                        <a href="#" class="category-link">
-                            <i class="fas fa-book icon-color-cyan"></i>
-                            <span>Sách</span>
-                            <i class="fas fa-chevron-down ms-1"></i>
-                        </a>
-                    </li>
-                    <li class="category-item">
-                        <a href="#" class="category-link">
-                            <i class="fas fa-dumbbell icon-color-pink"></i>
-                            <span>Sports - Lifestyle</span>
-                            <i class="fas fa-chevron-down ms-1"></i>
-                        </a>
-                    </li>
+                    @for(category of categories; track category.id) {
+                        <li class="category-item">
+                            <a class="category-link" [routerLink]="['/categories', category.id]">
+                                <i class="fas fa-folder icon-color-green"></i>
+                                <span>{{ category.name }}</span>
+                                <i class="fas fa-chevron-right ms-1"></i>
+                            </a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>

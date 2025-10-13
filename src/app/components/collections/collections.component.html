@@ -1,0 +1,215 @@
+<app-header></app-header>
+
+<div class="category-page bg-light">
+    <div class="container-fluid">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="breadcrumb-section">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="/categories">Danh mục</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Văn phòng phẩm</li>
+            </ol>
+        </nav>
+
+        <div class="row g-4">
+            <!-- Sidebar Filter -->
+            <div class="col-lg-3">
+                <div class="filter-sidebar">
+                    <!-- Category Filter -->
+                    <div class="filter-section">
+                        <h3 class="filter-title">LOẠI SẢN PHẨM</h3>
+                        <div class="filter-options">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="kepgiay" [(ngModel)]="filters.kepgiay">
+                                <label class="form-check-label" for="kepgiay">Kẹp giấy</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="butphannuoc" [(ngModel)]="filters.butphannuoc">
+                                <label class="form-check-label" for="butphannuoc">Bút phấn nước</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="dungcuvanphong" [(ngModel)]="filters.dungcuvanphong">
+                                <label class="form-check-label" for="dungcuvanphong">Dụng cụ văn phòng</label>
+                            </div>
+                        </div>
+                        <!-- <button class="btn-view-more" (click)="toggleCategoryExpand()">
+                            <span>Xem thêm</span>
+                            <i class="fas" [ngClass]="categoryExpanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                        </button> -->
+                    </div>
+
+                    <!-- Brand Filter -->
+                    <div class="filter-section">
+                        <h3 class="filter-title">THƯƠNG HIỆU</h3>
+                        <div class="filter-options">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="thienlong" [(ngModel)]="filters.thienlong">
+                                <label class="form-check-label" for="thienlong">Thiên Long</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="flexoffice" [(ngModel)]="filters.flexoffice">
+                                <label class="form-check-label" for="flexoffice">Flexoffice</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="diem10" [(ngModel)]="filters.diem10">
+                                <label class="form-check-label" for="diem10">Điểm 10</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="colokit" [(ngModel)]="filters.colokit">
+                                <label class="form-check-label" for="colokit">Colokit</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="khac" [(ngModel)]="filters.khac">
+                                <label class="form-check-label" for="khac">Khác</label>
+                            </div>
+                        </div>
+                        <!-- <button class="btn-view-more" (click)="toggleBrandExpand()">
+                            <span>Xem thêm</span>
+                            <i class="fas" [ngClass]="brandExpanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                        </button> -->
+                    </div>
+
+                    <!-- Price Filter -->
+                    <div class="filter-section">
+                        <h3 class="filter-title">MỨC GIÁ</h3>
+                        <div class="filter-options">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="priceRange" id="price1" [(ngModel)]="filters.priceRange" value="0-100000">
+                                <label class="form-check-label" for="price1">Dưới 100.000đ</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="priceRange" id="price2" [(ngModel)]="filters.priceRange" value="100000-200000">
+                                <label class="form-check-label" for="price2">100.000đ - 200.000đ</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="priceRange" id="price3" [(ngModel)]="filters.priceRange" value="200000-500000">
+                                <label class="form-check-label" for="price3">200.000đ - 500.000đ</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="priceRange" id="price4" [(ngModel)]="filters.priceRange" value="500000+">
+                                <label class="form-check-label" for="price4">Trên 500.000đ</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Apply Filter Button -->
+                    <button class="btn btn-primary w-100 btn-apply-filter" (click)="applyFilters()">
+                        <i class="fas fa-filter me-2"></i>Áp dụng bộ lọc
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-lg-9">
+                <!-- Banner -->
+                <div class="category-banner mb-4">
+                    <img src="https://file.hstatic.net/1000230347/collection/1920_x_600___cta__f2aa8ff1f7dd4e17a127cfaa6df2088a.jpg" 
+                         alt="Category Banner" 
+                         class="banner-image">
+                </div>
+
+                <!-- Category Header -->
+                <div class="category-header">
+                    <h1 class="category-title">{{ categoryName || 'Danh mục' }}</h1>
+                    <div class="category-sort">
+                        <span class="sort-label">Sắp xếp:</span>
+                        <a class="sort-link" [class.active]="sortBy === 'name-asc'" (click)="setSortBy('name-asc')">Tên A → Z</a>
+                        <a class="sort-link" [class.active]="sortBy === 'name-desc'" (click)="setSortBy('name-desc')">Tên Z → A</a>
+                        <a class="sort-link" [class.active]="sortBy === 'price-asc'" (click)="setSortBy('price-asc')">Giá tăng dần</a>
+                        <a class="sort-link" [class.active]="sortBy === 'price-desc'" (click)="setSortBy('price-desc')">Giá giảm dần</a>
+                        <a class="sort-link" [class.active]="sortBy === 'newest'" (click)="setSortBy('newest')">Hàng mới</a>
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="row g-3">
+                    @for(product of filteredProducts; track product.id) {
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="product-card" (click)="onProductClick(product.id)">
+                                <div class="product-image-wrapper">
+                                    <img [src]="product.url" 
+                                         [alt]="product.name" 
+                                         class="product-image">
+                                </div>
+
+                                <div class="product-info">
+                                    <h3 class="product-name" [title]="product.name">
+                                        {{ product.name }}
+                                    </h3>
+
+                                    <div class="product-rating d-flex justify-content-center align-items-center gap-1">
+                                        <div class="stars d-flex">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <span class="rating-count">({{ product.rating_count || 0 }})</span>
+                                    </div>
+
+                                    <div class="product-pricing text-center">
+                                        <span class="current-price">
+                                            {{ product.price | currency:'VND':'symbol':'1.0-0':'vi' }}
+                                        </span>
+                                    </div>
+
+                                    @if(product.original_price && product.original_price > product.price) {
+                                        <div class="price-discount">
+                                            <span class="original-price">
+                                                {{ product.original_price | currency:'VND':'symbol':'1.0-0':'vi' }}
+                                            </span>
+                                            <span class="discount-percent">
+                                                - {{ product.discount }}%
+                                            </span>
+                                        </div>
+                                    }
+
+                                    <button class="btn-view" type="button">
+                                        <i class="fas fa-eye me-2"></i>
+                                        XEM NHANH
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Empty State -->
+                @if(!filteredProducts || filteredProducts.length === 0) {
+                    <div class="empty-state text-center py-5">
+                        <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
+                        <h3 class="text-muted">Không tìm thấy sản phẩm</h3>
+                        <p class="text-muted">Vui lòng thử lại với bộ lọc khác</p>
+                        <button class="btn btn-primary mt-3" (click)="clearFilters()">
+                            <i class="fas fa-redo me-2"></i>Xóa bộ lọc
+                        </button>
+                    </div>
+                }
+
+                <!-- Pagination -->
+                @if(filteredProducts && filteredProducts.length > 0) {
+                    <div class="pagination-wrapper mt-4">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item" [class.disabled]="currentPage === 1">
+                                    <a class="page-link" (click)="setPage(currentPage - 1)">Trước</a>
+                                </li>
+                                <li class="page-item" *ngFor="let page of pages" [class.active]="page === currentPage">
+                                    <a class="page-link" (click)="setPage(page)">{{ page }}</a>
+                                </li>
+                                <li class="page-item" [class.disabled]="currentPage === totalPages">
+                                    <a class="page-link" (click)="setPage(currentPage + 1)">Sau</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Floating Action Buttons -->
+
+<app-footer></app-footer>

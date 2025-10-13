@@ -21,7 +21,7 @@ import { of } from 'rxjs';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     imports: [
-        FooterComponent,
+        
         HeaderComponent,
         CommonModule,
         FormsModule

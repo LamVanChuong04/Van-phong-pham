@@ -103,12 +103,31 @@ export class DetailProductComponent extends BaseComponent implements OnInit {
   addToCart(): void {
     debugger
     this.isPressedAddToCart = true;
-    if (this.product) {
-      this.cartService.addToCart(this.product.id, this.quantity);
-    } else {
+    if (!this.product) {
       // Xử lý khi product là null
       console.error('Không thể thêm sản phẩm vào giỏ hàng vì product là null.');
+      return;
     }
+
+    // Require login for adding to cart
+    const userJSON = this.document.defaultView?.localStorage.getItem('user');
+    const isLoggedIn = !!(userJSON && userJSON !== 'null');
+    if (!isLoggedIn) {
+      this.toastService.showToast({
+        error: null,
+        defaultMsg: 'Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng.',
+        title: 'Cần đăng nhập'
+      });
+      this.router.navigate(['/login'], { queryParams: { redirect: `/products/${this.product.id}` } });
+      return;
+    }
+
+    this.cartService.addToCart(this.product.id, this.quantity);
+    this.toastService.showToast({
+      error: null,
+      defaultMsg: 'Đã thêm sản phẩm vào giỏ hàng',
+      title: 'Thành công'
+    });
   }
 
   increaseQuantity(): void {
@@ -128,6 +147,18 @@ export class DetailProductComponent extends BaseComponent implements OnInit {
     return 0;
   }
   buyNow(): void {
+    const userJSON = this.document.defaultView?.localStorage.getItem('user');
+    const isLoggedIn = !!(userJSON && userJSON !== 'null');
+    if (!isLoggedIn) {
+      this.toastService.showToast({
+        error: null,
+        defaultMsg: 'Vui lòng đăng nhập để mua ngay.',
+        title: 'Cần đăng nhập'
+      });
+      this.router.navigate(['/login'], { queryParams: { redirect: `/products/${this.product?.id}` } });
+      return;
+    }
+
     if (this.isPressedAddToCart == false) {
       this.addToCart();
     }

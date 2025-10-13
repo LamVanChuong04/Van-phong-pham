@@ -28,10 +28,16 @@ export class CartService {
     this.emitCartCount();
   }
   private getCartKey():string {    
-    const userResponseJSON = this.localStorage?.getItem('user'); 
-    const userResponse = JSON.parse(userResponseJSON!);  
+    const userResponseJSON = this.localStorage?.getItem('user');
+    let userResponse: any = null;
+    try {
+      userResponse = userResponseJSON ? JSON.parse(userResponseJSON) : null;
+    } catch {
+      userResponse = null;
+    }
     debugger
-    return `cart:${userResponse?.id ?? ''}`;
+    // Use a stable guest key when not logged in
+    return `cart:${userResponse?.id ?? 'guest'}`;
 
   }
 
@@ -66,6 +72,17 @@ export class CartService {
   clearCart(): void {
     this.cart.clear(); // Xóa toàn bộ dữ liệu trong giỏ hàng
     this.saveCartToLocalStorage(); // Lưu giỏ hàng mới vào Local Storage (trống)
+    this.emitCartCount();
+  }
+
+  // Utility for logout flow to zero the displayed count immediately, and
+  // ensure guest cart is empty as well.
+  resetForLogout(): void {
+    this.cart = new Map<number, number>();
+    // Remove both potential keys (user and guest)
+    const userKey = this.getCartKey();
+    try { this.localStorage?.removeItem(userKey); } catch {}
+    try { this.localStorage?.removeItem('cart:guest'); } catch {}
     this.emitCartCount();
   }
 

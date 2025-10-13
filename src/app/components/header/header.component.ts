@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';  
 import { BaseComponent } from '../base/base.component';
+import { Category } from '../../models/category';
+import { ApiResponse } from '../../responses/api.response';
 
 @Component({
     selector: 'app-header',
@@ -22,10 +24,11 @@ export class HeaderComponent extends BaseComponent implements OnInit {
   isPopoverOpen = false;
   activeNavItem: number = 0;
   cartCount: number = 0;
+  categories: Category[] = [];
 
   ngOnInit() {
     this.userResponse = this.userService.getUserResponseFromLocalStorage();
-    // Refresh header user state on navigation changes (e.g., after login/logout)
+   
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.userResponse = this.userService.getUserResponseFromLocalStorage();
@@ -38,6 +41,13 @@ export class HeaderComponent extends BaseComponent implements OnInit {
     this.cartService.cartCount$.subscribe(count => this.cartCount = count);
     // Initialize current count
     this.cartService.refreshCart();
+
+    // Load categories for the header menu
+    this.categoryService.getCategories(0, 100).subscribe({
+      next: (res: ApiResponse) => {
+        this.categories = res.data || [];
+      }
+    });
   }
 
   togglePopover(event: Event): void {
@@ -52,6 +62,8 @@ export class HeaderComponent extends BaseComponent implements OnInit {
       this.userService.removeUserFromLocalStorage();
       this.tokenService.removeToken();
       this.userResponse = null;
+      // Clear cart when logging out so count = 0 for guests
+      this.cartService.resetForLogout?.();
       this.router.navigate(['/login']);
     }else{
       this.router.navigate(['/orders']);
