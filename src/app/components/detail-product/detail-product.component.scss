@@ -4,7 +4,9 @@
     padding: 20px;
     text-align: center;
 }
+.stars { display:flex; color:#ffc107; font-size:14px; }
 
+.rating-count { font-size:13px; color:#999; }
 .product-image {
     height: 80%;
     width: 100%;

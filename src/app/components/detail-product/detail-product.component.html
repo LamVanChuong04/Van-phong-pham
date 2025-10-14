@@ -44,6 +44,16 @@
       <div class="col-md-6">
         <div class="product-details">
           <h2>{{ product?.name }}</h2>
+          <div class="product-rating d-flex justify-content-center align-items-center gap-1">
+                                        <div class="stars d-flex">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <span class="rating-count">(0)</span>
+                                    </div>
           <p>{{ product?.description }}</p>
           <p>Giá: {{ product?.price | currency:'VND':'symbol':'1.0-0':'vi' }}</p>
           
