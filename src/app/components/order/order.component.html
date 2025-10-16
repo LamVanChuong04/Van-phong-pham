@@ -90,7 +90,7 @@
                         <!-- History Cart Items List  -->
                         <div class="cart-items">
                             <ng-container *ngFor="let product of purchasedProducts">
-                                <div class="cart-item">
+                                <div class="cart-item" (click)="onProductClick(product.id)">
 
                                     <div class="d-flex gap-3 align-items-start">
                                         <!-- Product Image -->

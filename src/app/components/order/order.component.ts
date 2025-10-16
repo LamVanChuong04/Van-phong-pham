@@ -257,4 +257,9 @@ export class OrderComponent extends BaseComponent implements OnInit {
       this.orderForm.markAllAsTouched();
     }
   }
+  onProductClick(productId: number) {
+    debugger;
+    // Điều hướng đến trang detail-product với productId là tham số
+    this.router.navigate(['/products', productId]);
+  }
 }
