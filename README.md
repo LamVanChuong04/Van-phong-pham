@@ -51,39 +51,185 @@ Người dùng có thể:
 ## 📁 Cấu Trúc Thư Mục
 
 ```bash
-src/
-└── app/
-    ├── components/              # Các component hiển thị (UI)
-    │   ├── cart/                # Giỏ hàng
-    │   ├── product/             # Danh sách và chi tiết sản phẩm
-    │   ├── auth/                # Đăng nhập, đăng ký
-    │   └── shared/              # Navbar, Footer, Toast, Modal
-    │
-    ├── dtos/                    # Data Transfer Objects (model giao tiếp API)
-    │   ├── product.dto.ts
-    │   ├── user.dto.ts
-    │   └── order.dto.ts
-    │
-    ├── exceptions/              # Xử lý lỗi chung (custom error handler)
-    ├── guards/                  # Route guards (AuthGuard, AdminGuard)
-    ├── interceptors/            # HTTP Interceptors (JWT, Error)
-    ├── models/                  # Định nghĩa interface/model dữ liệu
-    ├── payment-callback/        # Module xử lý callback từ cổng thanh toán
-    ├── responses/               # Các response model từ API
-    ├── services/                # Giao tiếp API (UserService, ProductService, AuthService)
-    ├── styles/                  # CSS & SCSS toàn cục
-    │
-    ├── app.config.ts            # Cấu hình app chung
-    ├── app.config.server.ts     # Cấu hình chạy server-side rendering
-    ├── app.routes.ts            # Định nghĩa router
-    │
-    ├── assets/                  # Ảnh, icon, font, JSON tĩnh
-    ├── environments/            # environment.ts / environment.prod.ts
-    ├── index.html               # Trang gốc Angular
-    ├── main.ts                  # Entry point chính
-    ├── main.server.ts           # SSR entry point
-    ├── polyfills.ts             # Polyfills cho trình duyệt cũ
-    └── styles.scss              # Style toàn cục
+├── src/
+│   ├── app/
+│   │   ├── app/
+│   │   │   ├── app.component.html
+│   │   │   ├── app.component.scss
+│   │   │   └── app.component.ts
+│   │   ├── components/
+│   │   │   ├── admin/
+│   │   │   │   ├── category/
+│   │   │   │   │   ├── insert/
+│   │   │   │   │   │   ├── insert.category.admin.component.html
+│   │   │   │   │   │   ├── insert.category.admin.component.scss
+│   │   │   │   │   │   └── insert.category.admin.component.ts
+│   │   │   │   │   ├── update/
+│   │   │   │   │   │   ├── update.category.admin.component.html
+│   │   │   │   │   │   ├── update.category.admin.component.scss
+│   │   │   │   │   │   └── update.category.admin.component.ts
+│   │   │   │   │   ├── category.admin.component.html
+│   │   │   │   │   ├── category.admin.component.scss
+│   │   │   │   │   └── category.admin.component.ts
+│   │   │   │   ├── dashboard/
+│   │   │   │   │   └── dashboard.admin.component.scss
+│   │   │   │   ├── detail-order/
+│   │   │   │   │   ├── detail.order.admin.component.html
+│   │   │   │   │   ├── detail.order.admin.component.scss
+│   │   │   │   │   └── detail.order.admin.component.ts
+│   │   │   │   ├── order/
+│   │   │   │   │   ├── order.admin.component.html
+│   │   │   │   │   ├── order.admin.component.scss
+│   │   │   │   │   └── order.admin.component.ts
+│   │   │   │   ├── product/
+│   │   │   │   │   ├── insert/
+│   │   │   │   │   │   ├── insert.product.admin.component.html
+│   │   │   │   │   │   ├── insert.product.admin.component.scss
+│   │   │   │   │   │   └── insert.product.admin.component.ts
+│   │   │   │   │   ├── update/
+│   │   │   │   │   │   ├── update.product.admin.component.html
+│   │   │   │   │   │   ├── update.product.admin.component.scss
+│   │   │   │   │   │   └── update.product.admin.component.ts
+│   │   │   │   │   ├── product.admin.component.html
+│   │   │   │   │   ├── product.admin.component.scss
+│   │   │   │   │   └── product.admin.component.ts
+│   │   │   │   ├── user/
+│   │   │   │   │   ├── user.admin.component.html
+│   │   │   │   │   ├── user.admin.component.scss
+│   │   │   │   │   └── user.admin.component.ts
+│   │   │   │   ├── admin-routes.ts
+│   │   │   │   ├── admin.component.html
+│   │   │   │   ├── admin.component.scss
+│   │   │   │   └── admin.component.ts
+│   │   │   ├── auth-callback/
+│   │   │   │   ├── auth-callback.component.html
+│   │   │   │   ├── auth-callback.component.scss
+│   │   │   │   └── auth-callback.component.ts
+│   │   │   ├── base/
+│   │   │   │   └── base.component.ts
+│   │   │   ├── collections/
+│   │   │   │   ├── collections.component.html
+│   │   │   │   ├── collections.component.scss
+│   │   │   │   └── collections.component.ts
+│   │   │   ├── detail-order/
+│   │   │   │   ├── order.detail.component.html
+│   │   │   │   ├── order.detail.component.scss
+│   │   │   │   └── order.detail.component.ts
+│   │   │   ├── detail-product/
+│   │   │   │   ├── detail-product.component.html
+│   │   │   │   ├── detail-product.component.scss
+│   │   │   │   └── detail-product.component.ts
+│   │   │   ├── footer/
+│   │   │   │   ├── footer.component.html
+│   │   │   │   ├── footer.component.scss
+│   │   │   │   └── footer.component.ts
+│   │   │   ├── header/
+│   │   │   │   ├── header.component.html
+│   │   │   │   ├── header.component.scss
+│   │   │   │   └── header.component.ts
+│   │   │   ├── home/
+│   │   │   │   ├── home.component.html
+│   │   │   │   ├── home.component.scss
+│   │   │   │   └── home.component.ts
+│   │   │   ├── login/
+│   │   │   │   ├── login.component.html
+│   │   │   │   ├── login.component.scss
+│   │   │   │   └── login.component.ts
+│   │   │   ├── order/
+│   │   │   │   ├── order.component.html
+│   │   │   │   ├── order.component.scss
+│   │   │   │   └── order.component.ts
+│   │   │   ├── register/
+│   │   │   │   ├── register.component.html
+│   │   │   │   ├── register.component.scss
+│   │   │   │   └── register.component.ts
+│   │   │   └── user-profile/
+│   │   │       ├── user.profile.component.html
+│   │   │       ├── user.profile.component.scss
+│   │   │       └── user.profile.component.ts
+│   │   ├── dtos/
+│   │   │   ├── category/
+│   │   │   │   ├── insert.category.dto.ts
+│   │   │   │   └── update.category.dto.ts
+│   │   │   ├── order/
+│   │   │   │   ├── cart.item.dto.ts
+│   │   │   │   └── order.dto.ts
+│   │   │   ├── payment/
+│   │   │   │   └── create.payment.dto.ts
+│   │   │   ├── product/
+│   │   │   │   ├── insert.product.dto.ts
+│   │   │   │   └── update.product.dto.ts
+│   │   │   └── user/
+│   │   │       ├── login.dto.ts
+│   │   │       ├── register.dto.ts
+│   │   │       └── update.user.dto.ts
+│   │   ├── exceptions/
+│   │   │   └── ValidationException.ts
+│   │   ├── guards/
+│   │   │   ├── admin.guard.ts
+│   │   │   └── auth.guard.ts
+│   │   ├── interceptors/
+│   │   │   └── token.interceptor.ts
+│   │   ├── models/
+│   │   │   ├── category.ts
+│   │   │   ├── order.detail.ts
+│   │   │   ├── order.ts
+│   │   │   ├── product.image.ts
+│   │   │   ├── product.ts
+│   │   │   ├── role.ts
+│   │   │   └── user.ts
+│   │   ├── payment-callback/
+│   │   │   ├── payment-callback.component.html
+│   │   │   ├── payment-callback.component.scss
+│   │   │   └── payment-callback.component.ts
+│   │   ├── responses/
+│   │   │   ├── order/
+│   │   │   │   └── order.response.ts
+│   │   │   ├── user/
+│   │   │   │   ├── login.response.ts
+│   │   │   │   └── user.response.ts
+│   │   │   └── api.response.ts
+│   │   ├── services/
+│   │   │   ├── auth.service.ts
+│   │   │   ├── cart.service.ts
+│   │   │   ├── category.service.ts
+│   │   │   ├── coupon.service.ts
+│   │   │   ├── http.util.service.ts
+│   │   │   ├── order.service.ts
+│   │   │   ├── payment.service.ts
+│   │   │   ├── product.service.ts
+│   │   │   ├── role.service.ts
+│   │   │   ├── toast.service.ts
+│   │   │   ├── token.service.ts
+│   │   │   └── user.service.ts
+│   │   ├── styles/
+│   │   │   └── shared-styles.scss
+│   │   ├── app.config.server.ts
+│   │   ├── app.config.ts
+│   │   └── app.routes.ts
+│   ├── assets/
+│   │   └── .gitkeep
+│   ├── environments/
+│   │   ├── environment.development.ts
+│   │   ├── environment.prod.ts
+│   │   └── environment.ts
+│   ├── index.html
+│   ├── main.server.ts
+│   ├── main.ts
+│   ├── polyfills.ts
+│   └── styles.scss
+├── .editorconfig
+├── .gitignore
+├── README.md
+├── angular.json
+├── package-lock.json
+├── package.json
+├── pnpm-lock.yaml
+├── server.ts
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.spec.json
+└── yarn.lock
 ---
 ### Cài NodeJS & Angular CLI
 ```bash
