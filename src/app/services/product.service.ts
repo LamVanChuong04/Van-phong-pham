@@ -61,5 +61,10 @@ export class ProductService {
     debugger
     return this.http.delete<string>(`${this.apiBaseUrl}/product_images/${id}`);
   }
+  getPurchasedProductsByUser(userId: number): Observable<Product[]> {
+  return this.http.get<Product[]>(`${this.apiBaseUrl}/products/purchased-products/${userId}`);
+}
+
+
 }
 //update.category.admin.component.html

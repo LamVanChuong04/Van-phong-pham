@@ -230,9 +230,13 @@ Người dùng có thể:
 ├── tsconfig.json
 ├── tsconfig.spec.json
 └── yarn.lock
+
+
 ---
-### Cài NodeJS & Angular CLI
+## Cài NodeJS & Angular CLI
+
 ```bash
+
 install nodejs
 npm install --legacy-peer-deps
 npm start

@@ -30,6 +30,7 @@ export class OrderComponent extends BaseComponent implements OnInit {
   orderForm: FormGroup;
   cartItems: { product: Product, quantity: number }[] = [];
   cart: Map<number, number> = new Map();
+  purchasedProducts: Product[] = [];
 
   totalAmount: number = 0;        // tổng hiện tại (sau giảm nếu có)
   originalTotal: number = 0;      // tổng gốc chưa giảm
@@ -66,6 +67,20 @@ export class OrderComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const userId = this.tokenService.getUserId();
+    this.productService.getPurchasedProductsByUser(userId).subscribe({
+      next: (products: Product[]) => {
+        // Gắn URL đầy đủ cho từng sản phẩm
+        this.purchasedProducts = products.map(p => ({
+          ...p,
+          thumbnail: `${environment.apiBaseUrl}/products/images/${p.thumbnail}`
+        }));
+      },
+      error: (err) => {
+        console.error('Lỗi tải sản phẩm đã mua:', err);
+      }
+    });
+
     this.orderData.user_id = this.tokenService.getUserId();
     this.orderForm.patchValue({ ...this.orderData });
 

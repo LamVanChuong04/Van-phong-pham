@@ -8,59 +8,54 @@
                 <div class="col-lg-7">
                     <div class="cart-card">
                         <h4 class="cart-title mb-4">Giỏ hàng</h4>
-                        
+
                         <!-- Cart Items List -->
                         <div class="cart-items">
                             <ng-container *ngFor="let item of cartItems; let i = index">
                                 <div class="cart-item">
                                     <!-- Remove button -->
-                                    <button type="button" 
-                                            class="btn-remove" 
-                                            (click)="confirmDelete(i)"
-                                            aria-label="Xóa sản phẩm">
+                                    <button type="button" class="btn-remove" (click)="confirmDelete(i)"
+                                        aria-label="Xóa sản phẩm">
                                         <i class="fas fa-times"></i>
                                     </button>
 
                                     <div class="d-flex gap-3 align-items-start">
                                         <!-- Product Image -->
                                         <div class="product-img-wrapper">
-                                            <img [src]="item.product.thumbnail" 
-                                                 [alt]="item.product.name" 
-                                                 class="product-img">
+                                            <img [src]="item.product.thumbnail" [alt]="item.product.name"
+                                                class="product-img">
                                         </div>
 
                                         <!-- Product Info -->
                                         <div class="flex-grow-1">
                                             <h6 class="product-name mb-2">{{ item.product.name }}</h6>
-                                            
-                                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+                                            <div
+                                                class="d-flex justify-content-between align-items-center flex-wrap gap-3">
                                                 <!-- Price -->
                                                 <div class="price-display">
                                                     <span class="current-price">
                                                         {{ item.product.price | currency:'VND':'symbol':'1.0-0':'vi' }}
                                                     </span>
                                                     @if(item.product.price && item.product.price > item.product.price) {
-                                                        <span class="original-price ms-2">
-                                                            {{ item.product.price | currency:'VND':'symbol':'1.0-0':'vi' }}
-                                                        </span>
-                                                        <span class="discount-percent ms-2">
-                                                            -{{ ((item.product.price - item.product.price) / item.product.price * 100) | number:'1.0-0' }}%
-                                                        </span>
+                                                    <span class="original-price ms-2">
+                                                        {{ item.product.price | currency:'VND':'symbol':'1.0-0':'vi' }}
+                                                    </span>
+                                                    <span class="discount-percent ms-2">
+                                                        -{{ ((item.product.price - item.product.price) /
+                                                        item.product.price * 100) | number:'1.0-0' }}%
+                                                    </span>
                                                     }
                                                 </div>
 
                                                 <!-- Quantity Controls -->
                                                 <div class="quantity-controls">
-                                                    <button type="button" 
-                                                            class="btn-qty" 
-                                                            (click)="decreaseQuantity(i)"
-                                                            [disabled]="item.quantity <= 1">
+                                                    <button type="button" class="btn-qty" (click)="decreaseQuantity(i)"
+                                                        [disabled]="item.quantity <= 1">
                                                         -
                                                     </button>
                                                     <span class="qty-display">{{ item.quantity }}</span>
-                                                    <button type="button" 
-                                                            class="btn-qty" 
-                                                            (click)="increaseQuantity(i)">
+                                                    <button type="button" class="btn-qty" (click)="increaseQuantity(i)">
                                                         +
                                                     </button>
                                                 </div>
@@ -71,106 +66,147 @@
                             </ng-container>
 
                             @if(cartItems.length === 0) {
-                                <div class="empty-cart text-center py-5">
-                                    <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
-                                    <p class="text-muted">Giỏ hàng của bạn đang trống</p>
-                                    <!-- <a routerLink="/home" class="btn btn-primary mt-3">
+                            <div class="empty-cart text-center py-5">
+                                <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                                <p class="text-muted">Giỏ hàng của bạn đang trống</p>
+                                <!-- <a routerLink="/home" class="btn btn-primary mt-3">
                                         <i class="fas fa-arrow-left me-2"></i>Tiếp tục mua sắm
                                     </a> -->
-                                </div>
+                            </div>
                             }
                         </div>
 
                         <!-- Gift Icon (if applicable) -->
                         @if(cartItems.length > 0) {
-                            <div class="gift-section mt-3">
-                                <i class="fas fa-gift text-danger me-2"></i>
-                                <span class="text-muted small">Quà tặng kèm theo đơn hàng</span>
-                            </div>
+                        <div class="gift-section mt-3">
+                            <i class="fas fa-gift text-danger me-2"></i>
+                            <span class="text-muted small">Quà tặng kèm theo đơn hàng</span>
+                        </div>
                         }
+                    </div>
+
+                    <div class="cart-card">
+                        <h4 class="cart-title mb-4">Lịch sử mua hàng</h4>
+                        <!-- History Cart Items List  -->
+                        <div class="cart-items">
+                            <ng-container *ngFor="let product of purchasedProducts">
+                                <div class="cart-item">
+
+                                    <div class="d-flex gap-3 align-items-start">
+                                        <!-- Product Image -->
+                                        <div class="product-img-wrapper">
+                                            <img [src]="product.thumbnail" [alt]="product.name" class="product-img">
+                                        </div>
+                                        <!-- Product Info -->
+                                        <div class="flex-grow-1">
+                                            <h6 class="product-name mb-2">{{ product.name }}</h6>
+
+                                            <div
+                                                class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                                <!-- Price -->
+                                                <div class="price-display">
+                                                    <span class="current-price">
+                                                        {{ product.price | currency:'VND':'symbol':'1.0-0':'vi' }}
+                                                    </span>
+                                                    @if(product.price && product.price > product.price) {
+                                                    <span class="original-price ms-2">
+                                                        {{ product.price | currency:'VND':'symbol':'1.0-0':'vi' }}
+                                                    </span>
+                                                    <span class="discount-percent ms-2">
+                                                        -{{ ((product.price - product.price) / product.price * 100) |
+                                                        number:'1.0-0' }}%
+                                                    </span>
+                                                    }
+                                                </div>
+
+                                                <!-- Quantity Controls -->
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </ng-container>
+
+
+                            <div *ngIf="purchasedProducts.length === 0" class="text-muted text-center py-3">
+                                Bạn chưa mua sản phẩm nào.
+                            </div>
+
+
+                        </div>
                     </div>
                 </div>
 
                 <!-- Right Column - Order Summary -->
                 <div class="col-lg-5">
                     <div class="summary-card sticky-top" style="top: 20px;">
-                        
-                            
+
+
 
                         <!-- Customer Info Form -->
                         <div class="customer-form-section">
                             <h6 class="section-title mb-3">Ghi chú đơn hàng</h6>
-                            <textarea class="form-control mb-3" 
-                                      rows="3" 
-                                      formControlName="note"
-                                      placeholder="Nhập ghi chú của bạn..."></textarea>
+                            <textarea class="form-control mb-3" rows="3" formControlName="note"
+                                placeholder="Nhập ghi chú của bạn..."></textarea>
 
                             <!-- Shipping & Payment Methods -->
                             <div class="mb-3">
-                                <label for="fullname" class="form-label">Họ và tên <span class="text-danger">*</span></label>
-                                <input type="text" 
-                                    formControlName="fullname" 
-                                    class="form-control" 
-                                    id="fullname"
+                                <label for="fullname" class="form-label">Họ và tên <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" formControlName="fullname" class="form-control" id="fullname"
                                     placeholder="Nhập họ và tên"
                                     [class.is-invalid]="orderForm.get('fullname')!.invalid && orderForm.get('fullname')!.touched">
                                 @if(orderForm.get('fullname')!.invalid && orderForm.get('fullname')!.touched) {
-                                    <div class="invalid-feedback">
-                                        Họ và tên là trường bắt buộc.
-                                    </div>
+                                <div class="invalid-feedback">
+                                    Họ và tên là trường bắt buộc.
+                                </div>
                                 }
                             </div>
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                                <input type="email" 
-                                    formControlName="email" 
-                                    class="form-control" 
-                                    id="email"
+                                <input type="email" formControlName="email" class="form-control" id="email"
                                     placeholder="example@email.com"
                                     [class.is-invalid]="orderForm.get('email')!.invalid && orderForm.get('email')!.touched">
                                 @if(orderForm.get('email')!.invalid && orderForm.get('email')!.touched) {
-                                    <div class="invalid-feedback">
-                                        {{ orderForm.get('email')!.hasError('email') ? 'Email không hợp lệ' : 'Email là trường bắt buộc' }}
-                                    </div>
+                                <div class="invalid-feedback">
+                                    {{ orderForm.get('email')!.hasError('email') ? 'Email không hợp lệ' : 'Email là
+                                    trường bắt buộc' }}
+                                </div>
                                 }
                             </div>
 
                             <div class="mb-3">
-                                <label for="phone" class="form-label">Số điện thoại <span class="text-danger">*</span></label>
-                                <input type="tel" 
-                                    formControlName="phone_number" 
-                                    class="form-control" 
-                                    id="phone"
+                                <label for="phone" class="form-label">Số điện thoại <span
+                                        class="text-danger">*</span></label>
+                                <input type="tel" formControlName="phone_number" class="form-control" id="phone"
                                     placeholder="0xxx xxx xxx"
                                     [class.is-invalid]="orderForm.get('phone_number')!.invalid && orderForm.get('phone_number')!.touched">
                                 @if(orderForm.get('phone_number')!.invalid && orderForm.get('phone_number')!.touched) {
-                                    <div class="invalid-feedback">
-                                        Số điện thoại là trường bắt buộc và ít nhất 6 ký tự.
-                                    </div>
+                                <div class="invalid-feedback">
+                                    Số điện thoại là trường bắt buộc và ít nhất 6 ký tự.
+                                </div>
                                 }
                             </div>
 
                             <div class="mb-3">
-                                <label for="address" class="form-label">Địa chỉ <span class="text-danger">*</span></label>
-                                <input type="text" 
-                                    formControlName="address" 
-                                    class="form-control" 
-                                    id="address"
+                                <label for="address" class="form-label">Địa chỉ <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" formControlName="address" class="form-control" id="address"
                                     placeholder="Nhập địa chỉ chi tiết"
                                     [class.is-invalid]="orderForm.get('address')!.invalid && orderForm.get('address')!.touched">
                                 @if(orderForm.get('address')!.invalid && orderForm.get('address')!.touched) {
-                                    <div class="invalid-feedback">
-                                        Địa chỉ là trường bắt buộc và ít nhất 5 ký tự.
-                                    </div>
+                                <div class="invalid-feedback">
+                                    Địa chỉ là trường bắt buộc và ít nhất 5 ký tự.
+                                </div>
                                 }
                             </div>
 
                             <div class="mb-3">
                                 <label for="shippingMethod" class="form-label">Phương thức vận chuyển</label>
-                                <select class="form-select" 
-                                        id="shippingMethod" 
-                                        formControlName="shipping_method">
+                                <select class="form-select" id="shippingMethod" formControlName="shipping_method">
                                     <option value="express">Nhanh (Express)</option>
                                     <option value="normal">Thường (Normal)</option>
                                 </select>
@@ -178,9 +214,7 @@
 
                             <div class="mb-3">
                                 <label for="paymentMethod" class="form-label">Phương thức thanh toán</label>
-                                <select class="form-select" 
-                                        id="paymentMethod"
-                                        formControlName="payment_method">
+                                <select class="form-select" id="paymentMethod" formControlName="payment_method">
                                     <option value="cod">Thanh toán khi nhận hàng (COD)</option>
                                     <option value="vnpay">Thanh toán bằng VNPAY</option>
                                     <option value="zalopay">Thanh toán bằng ZaloPAY</option>
@@ -191,33 +225,28 @@
                             <div class="coupon-section mb-3">
                                 <label class="form-label">Mã giảm giá</label>
                                 <div class="input-group">
-                                    <input type="text" 
-                                           class="form-control"
-                                           formControlName="couponCode"
-                                           placeholder="Nhập mã coupon">
-                                    <button (click)="applyCoupon()"
-                                            class="btn btn-outline-primary" 
-                                            type="button">
+                                    <input type="text" class="form-control" formControlName="couponCode"
+                                        placeholder="Nhập mã coupon">
+                                    <button (click)="applyCoupon()" class="btn btn-outline-primary" type="button">
                                         Áp dụng
                                     </button>
                                 </div>
                                 @if(couponApplied) {
-                                    <div class="mt-2">
-                                        <span class="badge bg-success">
-                                            <i class="fas fa-check me-1"></i>
-                                            Đã áp dụng mã giảm giá
-                                        </span>
-                                        <button (click)="removeCoupon()"
-                                                class="btn btn-sm btn-link text-danger p-0 ms-2">
-                                            Xóa
-                                        </button>
-                                    </div>
+                                <div class="mt-2">
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-check me-1"></i>
+                                        Đã áp dụng mã giảm giá
+                                    </span>
+                                    <button (click)="removeCoupon()" class="btn btn-sm btn-link text-danger p-0 ms-2">
+                                        Xóa
+                                    </button>
+                                </div>
                                 }
                                 @if(couponDiscount > 0) {
-                                    <div class="text-success mt-2 small">
-                                        <i class="fas fa-gift me-1"></i>
-                                        Bạn được giảm: {{ couponDiscount | number:'1.0-0' }} đ
-                                    </div>
+                                <div class="text-success mt-2 small">
+                                    <i class="fas fa-gift me-1"></i>
+                                    Bạn được giảm: {{ couponDiscount | number:'1.0-0' }} đ
+                                </div>
                                 }
                                 <!--tổng tiền thanh toán-->
                                 <div class="total-section mb-3">
@@ -232,10 +261,8 @@
                         </div>
 
                         <!-- Place Order Button -->
-                        <button type="button" 
-                                class="btn btn-primary btn-lg w-100 btn-place-order"
-                                (click)="placeOrder()"
-                                [disabled]="orderForm.invalid || cartItems.length === 0">
+                        <button type="button" class="btn btn-primary btn-lg w-100 btn-place-order"
+                            (click)="placeOrder()" [disabled]="orderForm.invalid || cartItems.length === 0">
                             Tiến hành đặt hàng
                         </button>
                     </div>
@@ -246,4 +273,3 @@
 </div>
 
 <app-footer></app-footer>
-
