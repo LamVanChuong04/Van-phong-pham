@@ -1,117 +1,153 @@
 @use '../../styles/shared-styles.scss' as *;
-
 .container {
-    color: white;
-    height: 100vh;    
+ 
+  margin-bottom: 60px;
 }
 
 .register-form {
-    background-color: $shopapp-background-color;
-    border-radius: 10px;
-    padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: white;
     max-width: 500px;
-    border: 1px solid rgb(32, 34, 60);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     align-items: center;
     justify-content: center;
+    margin-top: 50px;
+    line-height: 1.6;
+    color: #334155;
+    border-radius: 12px;
+    padding: 32px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .register-header {
-    text-align: center;
-    /*      color: rgb(233, 66, 178);*/
-    color: $shopapp-title-color;
+  text-align: center;
+    color: black;
     margin-bottom: 20px;
-
 }
 
-.label-text {
-    color: rgb(243, 165, 42);
+.form-group {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.form-label {
+  font-weight: 500;
+  color: #333;
 }
 
 .form-control {
-    background-color: transparent;
-    border: none;
-    color: white;
+  border-radius: 10px;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-control:focus {
-    color: white;
-    background-color: transparent;
-    outline: none;
-    box-shadow: none;
-    border-color: transparent;
-    padding-left: 0;
-}
-
-.password-field {
-    position: relative;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+  outline: none;
 }
 
 .password-toggle {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    color: $shopapp-title-color;
-    cursor: pointer;
+  position: absolute;
+  top: 38px;
+  right: 15px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.3s ease;
 }
 
-.checkbox-text {
-    color: rgb(243, 165, 42);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
+.password-toggle:hover {
+  color: #007bff;
 }
 
-/* Màu checkbox khi được chọn */
-.checkbox-text input[type="checkbox"]:checked {
-    border-color: white;
-    background-color: $shopapp-tint-color;
+.login-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.form-check-input {
-    margin-right: 5px;
+.login-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.02);
+}
+
+.social-login-buttons {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.social-button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  font-weight: 500;
+  margin-bottom: 12px;
+  transition: transform 0.2s ease, opacity 0.3s ease;
+}
+
+.social-button:hover {
+  transform: scale(1.03);
+  opacity: 0.9;
+}
+
+.google-button {
+  background-color: #db4437;
+}
+
+.facebook-button {
+  background-color: #4267b2;
 }
 
 .register-link {
-    color: $shopapp-title-color;
+  color: rgb(105, 244, 181);
     text-decoration: none;
+    cursor: pointer;
 }
 
+.register-link:hover {
+  text-decoration: underline;
+}
+
+.divider {
+  border-top: 1px solid rgb(243, 165, 42);
+  margin: 25px 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.invalid-feedback {
+  color: red;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .register-form {
+    padding: 25px;
+  }
+
+  .register-header {
+    font-size: 24px;
+  }
+}
 .register-button {
-    background: linear-gradient(to right, $shopapp-tint-color, $shopapp-color);
+    background: #6366f1;;
     color: white;
     border-radius: 30px;
     width: 100%;
     padding: 10px 0;
-    margin-top: 20px;
+    margin-top: 10px;
     border: none;
-}
-
-.divider {
-    height: 1px;
-    background-color: rgb(243, 165, 42);
-    /*      background-color: rgb(105, 244, 181)*/
-    margin: 20px;
-}
-
-.divider-nospace {
-    border-top: 1px solid white;
-}
-
-.form-control::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: rgba(243, 165, 42, 0.4);
-    opacity: 1;
-    /* Firefox */
-}
-
-.form-control:-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: rgba(243, 165, 42, 0.4);
-}
-
-.form-control::-ms-input-placeholder {
-    /* Microsoft Edge */
-    color: rgba(243, 165, 42, 0.4);
 }

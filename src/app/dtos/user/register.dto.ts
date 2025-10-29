@@ -9,6 +9,9 @@ export class RegisterDTO {
     @IsString()
     fullname: string;
 
+    @IsString()
+    email: string;
+
     @IsPhoneNumber()
     phone_number: string;
     
@@ -31,6 +34,7 @@ export class RegisterDTO {
     google_account_id: number = 0;
     role_id: number = 1;
     constructor(data: any) {
+        this.email = data.email;
         this.fullname = data.fullname;
         this.phone_number = data.phone_number;
         this.address = data.address;

@@ -14,10 +14,9 @@ import { BaseComponent } from '../base/base.component';
     styleUrls: ['./register.component.scss'],
     standalone: true,
     imports: [
+        HeaderComponent,
         CommonModule,
-        FormsModule,
-
-        FooterComponent
+        FormsModule
     ]
 })
 export class RegisterComponent extends BaseComponent{
@@ -30,11 +29,13 @@ export class RegisterComponent extends BaseComponent{
   address:string;
   isAccepted: boolean;
   dateOfBirth: Date;
-  showPassword: boolean = false;  
+  showPassword: boolean = false;
+  email: string;  
   
   constructor(){
     super();    
     this.phoneNumber = '';
+    this.email = '';
     this.password = '';
     this.retypePassword = '';
     this.fullName = '';
@@ -54,12 +55,14 @@ export class RegisterComponent extends BaseComponent{
                     `address: ${this.address}`+
                     `fullName: ${this.fullName}`+
                     `isAccepted: ${this.isAccepted}`+
-                    `dateOfBirth: ${this.dateOfBirth}`;
+                    `dateOfBirth: ${this.dateOfBirth}`+
+                    `email: ${this.email}`;
     //console.error(message);
     debugger
     
     const registerDTO:RegisterDTO = {
         "fullname": this.fullName,
+        "email": this.email,
         "phone_number": this.phoneNumber,
         "address": this.address,
         "password": this.password,

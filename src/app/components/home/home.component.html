@@ -37,51 +37,7 @@
 </div>
 
 <!-- Category sections -->
-<div class="container mt-4">
-  @for(category of categories; track category.id) {
-    <section class="category-section mb-4">
-      <div class="d-flex align-items-center justify-content-between mb-2">
-        <h5 class="mb-0 fw-bold">{{ category.name }}</h5>
-        <div class="d-flex gap-2">
-          <button class="btn btn-sm btn-outline-primary">Sản phẩm HOT</button>
-          <button class="btn btn-sm btn-outline-primary">Bút lông màu</button>
-          <button class="btn btn-sm btn-outline-primary">Sáp màu</button>
-          <button class="btn btn-sm btn-outline-primary">Màu nước</button>
-          <button class="btn btn-sm btn-outline-primary">Sáp nặn</button>
-        </div>
-      </div>
-      <div class="row row-cols-2 row-cols-md-5 g-3">
-        @for(product of categoryProducts[category.id]; track product?.id) {
-          <div class="col" *ngIf="product">
-            <div class="product-item" (click)="onProductClick(product.id)">
-                <img [src]="product.url" alt="Product Image" class="product-image">
-                <h3 class="product-name">{{ product.name }}</h3>
-                <!-- <p class="product-description">{{ product.description }}</p> -->
-                 <div class="product-rating d-flex justify-content-center align-items-center gap-1">
-                                        <div class="stars d-flex">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <span class="rating-count">({{ product.rating_count || 0 }})</span>
-                                    </div>
-                <p class="product-price">
-                  Giá: {{ product.price | currency:'VND':'symbol':'1.0-0':'vi' }}
-                </p>
-                <div class="product-quick-actions">
-                  <button type="button" class="btn btn-sm btn-primary btn-view" (click)="$event.stopPropagation(); onQuickView(product.id)"> <i class="fas fa-eye me-2"></i>Xem nhanh</button>
-                </div>
-            </div>
-          </div>
-        }
-      </div>
-      
-    </section>
-  }
-  
-</div>
+
 
 <div class="d-flex justify-content-center">
     <nav aria-label="Page navigation">
