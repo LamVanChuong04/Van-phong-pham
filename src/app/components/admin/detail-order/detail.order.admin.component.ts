@@ -64,6 +64,8 @@ export class DetailOrderAdminComponent extends BaseComponent implements OnInit {
             response.order_date[2]
           );
         }
+        console.log(response.order_details);
+
         this.orderResponse.order_details = response.order_details
           .map((order_detail: any) => {
             order_detail.product.thumbnail = `${environment.apiBaseUrl}/products/images/${order_detail.product.thumbnail}`;
