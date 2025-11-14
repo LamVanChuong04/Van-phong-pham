@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { BaseComponent } from '../base/base.component';
 @Component({
     selector: 'app-order-detail',
+    standalone: true,
     templateUrl: './order.detail.component.html',
     styleUrls: ['./order.detail.component.scss'],
     imports: [

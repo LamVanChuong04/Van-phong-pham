@@ -11,6 +11,7 @@ import { InsertProductAdminComponent } from "./product/insert/insert.product.adm
 import { InsertCategoryAdminComponent } from "./category/insert/insert.category.admin.component";
 import { UpdateCategoryAdminComponent } from "./category/update/update.category.admin.component";
 import { UserAdminComponent } from "./user/user.admin.component";
+import { DashboardAdminComponent } from "./dashboard/dashboard.admin.component";
 
 
 export const adminRoutes: Routes = [
@@ -18,7 +19,15 @@ export const adminRoutes: Routes = [
         path: 'admin',
         component: AdminComponent,
         children: [
-            
+            {
+                path: '',
+                pathMatch: 'full',
+                redirectTo: 'dashboard'
+            },
+            {
+                path: 'dashboard',
+                component: DashboardAdminComponent
+            },
             {
                 path: 'orders',
                 component: OrderAdminComponent

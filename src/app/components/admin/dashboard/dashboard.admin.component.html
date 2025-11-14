@@ -1,0 +1,115 @@
+<div class="container-fluid py-4">
+  <div *ngIf="isLoading" class="d-flex justify-content-center py-5">
+    <div class="spinner-border text-success" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && errorMessage" class="alert alert-danger" role="alert">
+    {{ errorMessage }}
+  </div>
+
+  <ng-container *ngIf="!isLoading && !errorMessage">
+    <div class="row g-4">
+      <div class="col-sm-6 col-xl-3">
+        <div class="card kpi-card kpi-orders h-100">
+          <div class="card-body">
+            <h6 class="card-subtitle text-uppercase mb-2">Tổng số hóa đơn</h6>
+            <p class="kpi-value">{{ totalInvoices }}</p>
+            <p class="mb-0 text-white-50">Tổng cộng tất cả hóa đơn đã ghi nhận</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xl-3">
+        <div class="card kpi-card kpi-revenue h-100">
+          <div class="card-body">
+            <h6 class="card-subtitle text-uppercase mb-2">Tổng doanh thu</h6>
+            <p class="kpi-value">{{ totalRevenue | currency:'VND':'symbol':'1.0-0' }}</p>
+            <p class="mb-0 text-white-50">Doanh thu từ tất cả đơn hàng</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4 mt-1">
+      <div class="col-md-4" *ngFor="let metric of timeFrameMetrics">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title mb-3">{{ metric.label }}</h5>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="text-muted">Số hóa đơn</span>
+              <span class="fw-bold">{{ metric.invoices }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="text-muted">Doanh thu</span>
+              <span class="fw-bold">{{ metric.revenue | currency:'VND':'symbol':'1.0-0' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-4">
+      <div class="card-body">
+        <div class="row g-3 align-items-end">
+          <div class="col-sm-4">
+            <label for="selectedDate" class="form-label">Chọn ngày</label>
+            <input
+              id="selectedDate"
+              class="form-control"
+              type="date"
+              [(ngModel)]="selectedDate"
+              (change)="onSelectedDateChange()"
+            />
+          </div>
+          <div class="col-sm-8">
+            <div class="d-flex flex-column flex-sm-row gap-3">
+              <div>
+                <div class="text-muted">Số hóa đơn</div>
+                <div class="fs-4 fw-semibold">{{ selectedDateInvoices }}</div>
+              </div>
+              <div>
+                <div class="text-muted">Doanh thu</div>
+                <div class="fs-4 fw-semibold">
+                  {{ selectedDateRevenue | currency:'VND':'symbol':'1.0-0' }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          *ngIf="selectedDateOrders.length === 0"
+          class="alert alert-info mt-4 mb-0"
+        >
+          Không tìm thấy hóa đơn nào trong ngày đã chọn.
+        </div>
+
+        <div class="table-responsive mt-4" *ngIf="selectedDateOrders.length > 0">
+          <table class="table table-striped align-middle">
+            <thead>
+              <tr>
+                <th>Khách hàng</th>
+                <th>Email</th>
+                <th>Điện thoại</th>
+                <th>Tổng tiền</th>
+                <th>Sản phẩm đã mua</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let order of selectedDateOrders">
+                <td>{{ order.fullname }}</td>
+                <td>{{ order.email }}</td>
+                <td>{{ order.phone_number }}</td>
+                <td>{{ order.total_money | currency:'VND':'symbol':'1.0-0' }}</td>
+                <td>{{ getOrderProductsSummary(order) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+

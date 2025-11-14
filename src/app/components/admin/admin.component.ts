@@ -6,6 +6,7 @@ import { BaseComponent } from '../base/base.component';
 
 @Component({
     selector: 'app-admin',
+    standalone: true,
     templateUrl: './admin.component.html',
     styleUrls: [
         './admin.component.scss',
